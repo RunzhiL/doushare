@@ -28,8 +28,8 @@ app.get("/", (req, res) => {
   res.send("DouShare Express + Mongoose API is running.");
 });
 
-console.log("Connecting to MongoDB:", process.env.MONGO_URI);
-mongoose.connect(process.env.MONGO_URI, {
+console.log("Connecting to MongoDB:", process.env.MONGO_ATLAR_URI);
+mongoose.connect(process.env.MONGO_ATLAR_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {

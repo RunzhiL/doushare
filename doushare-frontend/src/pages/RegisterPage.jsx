@@ -20,7 +20,7 @@ const RegisterPage = () => {
         body: JSON.stringify({ email, password, fullName }),
       });
 
-      if (!res.ok) throw new Error("Registration failed");
+      if (!res.ok) throw new Error("Areardy registered");
 
       const data = await res.json();
       alert("Registration successful!");

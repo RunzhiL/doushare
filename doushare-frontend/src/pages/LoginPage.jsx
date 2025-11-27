@@ -18,7 +18,7 @@ const LoginPage = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      if (!res.ok) throw new Error("Login failed");
+      if (!res.ok) throw new Error("Login failed, email and password not match!");
 
       const data = await res.json();
       console.log("Login successful", data);
