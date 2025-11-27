@@ -21,7 +21,7 @@ const BorrowRequestPage = () => {
 
   const handleSubmit = async () => {
 
-    // ✔ Ensure dates are filled
+    // Ensure dates are filled
     if (!requestedFrom || !requestedTo) {
       alert("Please select both start and end dates.");
       return;

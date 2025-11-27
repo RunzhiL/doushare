@@ -3,7 +3,6 @@ const router = express.Router();
 const Deposit = require("../models/Deposit");
 const auth = require("../middleware/auth");
 
-// Create a deposit record
 
 
 

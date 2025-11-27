@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Conversation = require("../models/Conversation");
 
-// ✅ 创建新对话
+// Create a new conversation
 router.post("/", async (req, res) => {
   try {
     const { item_id, borrower_id, owner_id } = req.body;
@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// ✅ 获取所有对话（可选带条件）
+// Get all conversations (optionally with filters)
 router.get("/", async (req, res) => {
   try {
     const conversations = await Conversation.find()
@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ 获取特定用户的对话
+// Get conversations for a specific user
 router.get("/user/:userId", async (req, res) => {
   try {
     const { userId } = req.params;

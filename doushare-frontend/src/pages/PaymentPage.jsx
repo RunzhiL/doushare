@@ -13,7 +13,7 @@ const PaymentPage = () => {
   const [item, setItem] = useState(null);
   const [total, setTotal] = useState(0);
 
-  // 1. load Borrow info
+  // load Borrow info
   useEffect(() => {
     if (!borrowId) {
       console.error("borrowId is missing in URL");

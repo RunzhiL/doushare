@@ -6,9 +6,8 @@ const Item = require("../models/Item");
 const Borrow = require("../models/Borrow");
 const Notification = require("../models/Notification");
 
-// ----------------------------------------------------------
-// 1. Create a borrow request (Submit Borrow Request)
-// ----------------------------------------------------------
+
+// Create a borrow request (Submit Borrow Request)
 router.post("/", auth, async (req, res) => {
   try {
     const { item_id, requested_from, requested_to, message } = req.body;
@@ -41,9 +40,8 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// ----------------------------------------------------------
-// 2. Borrower: View their own submitted requests
-// ----------------------------------------------------------
+
+// Borrower: View their own submitted requests
 router.get("/myrequests", auth, async (req, res) => {
   try {
     const requests = await Request.find({ borrower_id: req.user.id })
@@ -56,9 +54,8 @@ router.get("/myrequests", auth, async (req, res) => {
   }
 });
 
-// ----------------------------------------------------------
-// 3. Owner: View all incoming requests (for approval page)
-// ----------------------------------------------------------
+
+// Owner: View all incoming requests (for approval page)
 router.get("/received", auth, async (req, res) => {
   try {
     const received = await Request.find({ owner_id: req.user.id })
@@ -67,14 +64,13 @@ router.get("/received", auth, async (req, res) => {
 
     res.json(received);
   } catch (err) {
-    console.error("🔥 ERROR in /received:", err);
+    console.error(" ERROR in /received:", err);
     res.status(500).json({ error: err.message });
   }
 });
 
-// ----------------------------------------------------------
-// 4. Get a single request (used by PaymentPage)
-// ----------------------------------------------------------
+
+// Get a single request (used by PaymentPage)
 router.get("/:id", auth, async (req, res) => {
   try {
     const request = await Request.findById(req.params.id)
@@ -91,9 +87,8 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-// ----------------------------------------------------------
-// 5. Owner approves / rejects the request
-// ----------------------------------------------------------
+
+//  Owner approves / rejects the request
 router.put("/:id", auth, async (req, res) => {
   try {
     const request = await Request.findById(req.params.id).populate("item_id");
@@ -115,9 +110,8 @@ router.put("/:id", auth, async (req, res) => {
     request.status = newStatus;
     await request.save();
 
-    // ------------------------------------------------------
-    // ⭐⭐⭐ Approve → Automatically create Borrow record ⭐⭐⭐
-    // ------------------------------------------------------
+    // Approve → Automatically create Borrow record 
+  
     if (newStatus === "approved") {
 
       await Borrow.create({
@@ -143,9 +137,7 @@ router.put("/:id", auth, async (req, res) => {
       });
     }
 
-    // ------------------------------------------------------
     // Reject
-    // ------------------------------------------------------
     if (newStatus === "rejected") {
       await Notification.create({
         user_id: request.borrower_id,
@@ -157,7 +149,7 @@ router.put("/:id", auth, async (req, res) => {
     res.json(request);
 
   } catch (err) {
-    console.error("🔥 ERROR in APPROVE/REJECT:", err);
+    console.error(" ERROR in APPROVE/REJECT:", err);
     res.status(400).json({ error: err.message });
   }
 });
